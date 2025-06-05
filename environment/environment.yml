@@ -1,0 +1,12 @@
+# environment.yml
+name: divide_mapper
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - xarray
+  - geopandas
+  - rioxarray
+  - numpy
+  - shapely
+  - pyproj
