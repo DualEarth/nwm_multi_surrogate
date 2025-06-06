@@ -1,0 +1,1 @@
+I made some changes and improvements to the original files and saved them here. I also ran the files to compute the pixel indexes for both the LDASOUT and LDASIN files and stored the computed indexes in zip files.
