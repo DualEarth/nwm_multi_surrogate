@@ -113,4 +113,4 @@ inspect_gpkg(gpkg_path, display=False)
 netcdf_file = r"C:\Users\colli\Downloads\ldasin\2004010100.LDASIN_DOMAIN1"
 inspect_netcdf(netcdf_file, display=False)
 ds = xr.open_dataset(netcdf_file)
-##print(ds.coords)
+#print(ds.coords)
