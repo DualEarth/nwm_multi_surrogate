@@ -116,6 +116,9 @@ def process_ldas_files(ldas_files, index_map, var_name):
             })
     return pd.DataFrame(records)
 
+def pivot_variable(df, var_name):  ## Function to format CSV output with time as rows and divide_id as columns
+    return df.pivot(index="time", columns="divide_id", values=var_name)
+
 # ------------------------ MAIN ------------------------
 def main():
     ldas_files = sorted(LDAS_FOLDER.glob("*.LDASOUT_DOMAIN1"))
@@ -129,8 +132,8 @@ def main():
     df = process_ldas_files(ldas_files, index_map, VAR_NAME)
 
     print("[INFO] Saving to CSV...")
-    df = df.sort_values(["divide_id", "time"])
-    df.to_csv(OUTPUT_CSV, index=False)
+    df = df.sort_values(["divide_id", "time"])  # df_pivoted = pivot_variable(df, VAR_NAME)
+    df.to_csv(OUTPUT_CSV, index=False)   #  df_pivoted.to_csv(OUTPUT_CSV)
     print("[INFO] Done.")
 
 if __name__ == "__main__":
