@@ -1,0 +1,112 @@
+run_dir: runs/my_parquet_run
+experiment_name: lstm_parquet_custom
+model: cudalstm
+trainer:
+  module: my_custom_trainer
+  class: CustomTrainer
+  save_internal_states: True
+  reduced_state_dimension: 3
+
+save_timeseries_states: True
+save_internal_states: True
+head: regression
+output_activation: linear
+
+dev_mode: True
+
+# Dataset
+dataset: parquetdataset
+data_dir: C:/Users/deonf/Model_work
+parquet_ldasin_dir: C:/Users/deonf/Model_work/par_out_ldasin_final
+parquet_ldasout_dir: C:/Users/deonf/Model_work/par_out_ldasout_final
+
+# Basins files
+train_basin_file: train_basins.txt
+validation_basin_file: valid_basins.txt
+test_basin_file: test_basins.txt
+
+# Time periods
+train_start_date: "01/01/1995"
+train_end_date: "31/12/1995"
+
+validation_start_date: "01/05/1995"
+validation_end_date: "30/06/1995"
+
+test_start_date: "01/09/1996"
+test_end_date: "31/12/1996"
+
+
+# which GPU (id) to use [in format of cuda:0, cuda:1 etc, or cpu, mps or None]
+device: cuda:0
+
+# Model parameters
+hidden_size: 256
+seq_length: 112
+forecast_seq_length: 10
+predict_last_n: 10
+forecast_overlap: 0
+initial_forget_bias: 1.0 
+
+# Features & Targets
+target_variables:
+  - ACCET
+  # - ACSNOM
+  # - ALBEDO
+  - COSZ
+  - EDIR
+  - FIRA
+  - FSA
+  # - FSNO
+  - HFX
+  - LH
+  - QRAIN
+  # - QSNOW
+  # - SNEQV
+  # - SNOWH
+  - TRAD
+  - UGDRNOFF
+dynamic_inputs:
+  - LWDOWN
+  - PSFC
+  - Q2D
+  - RAINRATE
+  - SWDOWN
+  - T2D
+  - U2D
+  - V2D
+  
+static_inputs: []
+
+
+# Training parameters
+optimizer: Adam
+loss: rmse
+n_distributions: 5
+
+learning_rate:
+  0: 1e-4
+batch_size: 256
+epochs: 2
+
+metrics:
+  - NSE
+  - RMSE
+ # <--- UPDATED: Changed from 'mae' to 'Peak-MAPE' based on metrics.py
+
+# Validation settings
+validation_frequency: 10
+validate_n_random_basins: 5
+
+validate_every: 1
+log_n_figures: 20
+
+verbose: 1
+
+save_train_data: True
+
+
+num_workers: 0
+
+#set PYTHONPATH=C:\Users\deonf\Model_work
+#set KMP_DUPLICATE_LIB_OK=TRUE
+#python C:\Users\deonf\anaconda3\Lib\site-packages\neuralhydrology\nh_run.py train --config-file testrun.yml
